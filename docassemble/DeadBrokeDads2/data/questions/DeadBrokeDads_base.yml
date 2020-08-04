@@ -1,0 +1,98 @@
+---
+metadata:
+  title: |
+    Help with DOR collecting back child support
+  short title: |
+    Help with Child Support Arrears
+  description: |
+    An interview to help parents when DOR/CSE is collecting past due child support 
+  authors: |
+    - name: Caroline Robinson
+      organization: Volunteer Lawyers Project
+  revision_date: 2020-02-17
+---
+sections:
+  - Introduction
+  - Notice of Child Support Delinquency
+  - Current child support order
+    - Calculating arrears
+    - Possible causes
+    - Modified child support order
+  - Conclusion
+---
+features:
+  navigation: True
+  progress bar: True
+---
+modules:
+  - docassemble.income
+  - .DBDIncome
+---
+objects:
+  - client: Individual
+  - other_parent: Individual
+  - dor_other_parent: Individual
+  - macourts: MACourtList.using(courts=['probate_and_family_courts'])
+  - benefits_dor_took_money: DAObject
+  - your_past_benefits: DADict.using(object_type=DAObject)
+  - your_children_past_benefits: DADict.using(object_type=DAObject)
+---
+images:
+  notice: Notice of Arrears.png
+  noticetop: DBD_NoticeTop.png
+---
+terms:
+  notice: |
+     [FILE Notice_of_Arrears.png]
+  noticetop: |
+      [FILE DBD_NoticeTop.png]
+---
+default screen parts:
+  continue button label: |
+    Next
+---
+include:
+  - dbd-01-intro.yml
+  - dbd-01a-hardships-to-sentences.yml
+  - dbd-02-compare.yml
+  - dbd-03-reasons-for-error.yml
+  - dbd-04-reasons-for-review.yml
+  - dbd-05-other-considerations.yml
+  - dbd-06-form-decisions.yml
+  - dbd-07-shared-form-info.yml
+  - dbdx.yml
+---
+mandatory: True
+code: |
+  intro_complete
+  comparison_complete
+  if dor_cse_notice_arrears_wrong or dor_cse_notice_arrears_wrong == None:
+    possibilities_complete
+  reasons_for_review_complete
+  other_considerations_complete
+  admin_review = True
+  equit_adjust = True
+  
+  
+  # financial_statement_questions # Defines client, spouse, household, assets, incomes, vehicles, expenses,
+  # form_decisions_complete
+  shared_form_info_complete
+  get_forms
+  
+ 
+  
+  
+    
+
+---
+question: |
+  Here are your forms!
+attachment:
+  name: Help for Child Support obligor parents
+  filename: help-for-parents
+  docx template file: help_for_obligors-test5.docx
+  valid formats:
+    - pdf
+    - docx
+event: get_forms
+---

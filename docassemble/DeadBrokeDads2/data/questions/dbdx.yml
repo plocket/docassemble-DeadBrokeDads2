@@ -1,0 +1,39 @@
+---
+include:
+  - section-i.yml
+  - section-ii.yml
+  - section-iii.yml
+  - section-iv.yml
+  - section-v.yml
+  - section-vi2.yml
+---
+objects: 
+  - client: Individual
+  - children: ChildList
+  - ind_household: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='month_contrib')
+  - employer: Person
+  - spouse_employer: Person
+  - vehicles: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='current_value')
+  - realprop: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='current_value')
+  - bankact: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='act_type')
+  - retirement_acts: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='balance')
+  - securities: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='cur_val')
+  - credit_cards: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='total_amt_owed')
+---
+modules:
+  - docassemble.ssa.ssa
+---
+features:
+  javascript: docassemble.ssa:ssa2.js
+---
+
+# mandatory: true
+# question: |
+#   Here is your document.
+# attachments:
+#   - name: Statement of Financial Condition
+#     filename: statement_of_financial_condition
+#     docx template file: sofc8.docx
+#     valid formats:
+#       - pdf
+#       - docx

@@ -1,0 +1,170 @@
+mandatory: True
+code: |
+  if get_started:
+    client.name.first
+  else:
+    kick_out
+  if problems.any_true('other'):
+    prob_other
+    other_need = True
+  if help_needed.any_true('cant-afford', 'cant-sustain'):
+    hardships  
+  # if help_needed.any_true('needplan'):
+    # need_offer
+  if problems.any_true('told-me-garnish-increase', 'told-boss-garnish-increase'): 
+    if hardships.any_true():
+      twenty_five_percent = True
+  if problems.any_true('driver-license', 'car-reg'):
+    comment_car
+  if problems.any_true('business-license', 'professional-license', 'trade-license'):
+    comment_license
+
+  intro_complete = True
+
+
+---
+section: Introduction
+question: | 
+  Welcome!
+subquestion: |
+  If DOR/CSE sent you a Notice of Child Support Delinquency you may not have to pay **everything** on the notice. 
+  
+    They can decide not to charge you:
+
+    * interest, (?)
+    * penalties,
+    * the amount of child support you owe them.* 
+
+    They can also undo actions they have taken that make it hard for you to pay overdue child support.
+    
+    We will ask you questions to help you fill out the forms you need to get help with the money DOR says you them.
+    
+  [FILE Notice_of_Arrears.png]  
+  Shall we get started?
+yesno: get_started
+under: |
+  Note: Just to be clear -  we can **only** help with money you owe the Department of Revenue. 
+  You must still pay any back child support you owe your child's other parent.
+---
+question: |
+  Modify your child support order
+subquestion: |
+  If:
+    * you cannot pay the amount of child support the court ordered you to pay and
+
+    * things have changed since the court made the child support order, ask the court to change the order.
+
+  Read 
+  [Changing your child support order](https://www.masslegalhelp.org/children-and-families/child-support-changing-it) and
+  
+   [How do I change a child support order](https://www.masslegalhelp.org/children-and-families/child-support-change-how).
+event: kick_out
+---
+question: |
+ Your name
+subquestion: |
+  What is your name? We need to put your name on the forms you send to DOR/CSE. 
+fields:
+  - First: client.name.first
+  - Middle: client.name.middle
+    required: False
+  - Last: client.name.last
+section: About you
+---
+question: |
+  What actions has DOR taken that make it hard for you to pay the child support?
+fields:
+  - note: Check every box that is true.
+  - no label: problems
+    datatype: checkboxes
+    choices:
+      - This Notice of Delinquency is the first I knew I was behind in child support.: knewnot
+      - DOR took my tax refund: refund 
+      - DOR started taking money out my pay: garnish  
+      - DOR is taking more money out of my pay than they should.: garnish-increase
+      - DOR told me the amount of child support I need to pay is going up by 25%: told-me-garnish-increase
+      - DOR told **my employer** the amount of child support I need to pay is going up by 25%: told-boss-garnish-increase
+      - DOR froze my account so I cannot use the money in my bank.: froze-account
+      - DOR took money out of my bank account.: account
+      - DOR took money out of an account that is not my money.: shared-account			
+      - DOR took my driver's license: driver-license			
+      - DOR suspended my car registration: car-reg			
+      - DOR took my business license: business-license			
+      - DOR took my professional license: professional-license
+      - DOR took my trade license: trade-license
+      - I have another problem with DOR.: other
+    none of the above: False
+    
+---
+question: |
+  What is the other problem you are having with DOR/CSE?
+subquestion: |
+  Describe the other thing DOR did. And explain the problem it is causing you. 
+fields:
+  - no label: prob_other
+    datatype: area
+---
+question: |
+  What do you need help with, ${client.name.first}? 
+subquestion: |
+  Check the box next to everything that is true.
+fields:
+  - no label: help_needed
+    datatype: checkboxes
+    choices:
+      - DOR is wrong about the amount of child support I owe.: disagreement
+      - I cannot pay all the back child support I owe.: cant-afford
+      - I cannot keep up with the payments that the Court ordered: cant-sustain
+      - I need help like a payment plan to pay the back child support I owe: needplan
+---
+question: |
+  Explain what you cannot afford
+subquestion: |
+  We all mean different things when we say we "cannot afford" something. If you are struggling with anything in the list below, check the box to tell the DOR/CSE that you are suffering "hardship"
+fields:
+  - no label: hardships
+    datatype: checkboxes
+    choices:  
+      - I cannot pay for groceries.: groceries
+      - I cannot pay for medication I need.: meds
+      - I cannot pay my utilities.: utilities
+      - My utilities will be shut off.: fear-utilities
+      - My utilities have been shut off.: lost-utilities
+      - I cannot pay rent.: rent
+      - I will be evicted.: eviction-fear
+      - I am being evicted.: eviction-facing
+      - I cannot pay my mortgage.: mortgage
+      - My house will be foreclosed on.: foreclosure-fear
+      - I am being forced to stay with an abusive partner: abuse
+      - I cannot pay for some other basic need.: other
+---
+question: |
+  I cannot drive!
+subquestion: |
+  Explain to DOR why being unable to drive is causing you a problem.
+fields:
+    - no label: comment_car
+under: |
+  For example, "I cannot pick up my ${ child_te }.  I cannot get to work so I cannot earn money for basic needs and child support."
+---
+question: |
+  I need my license!
+subquestion: |
+  Explain to DOR why taking your license is causing you a problem.
+fields:
+    - no label: comment_license
+under: |
+  For example, "I need my license to work so I can earn money to pay for my basic needs and child support."
+---
+question: |
+  
+subquestion: |
+  You may be able to make a “settlement” with DOR/CSE for past-due child support.  DOR/CSE will **not** make a settlement with you about past-due child support you owe ${ other_parent.name.first }. 
+  
+  See <a href="https://www.masslegalhelp.org/children-and-families/child-support-dor/pay-past-due" target="_blank">Can DOR/CSE let me pay less past-due child support than I owe?</a> to learn more.
+  
+  We cannot help you with the Offer in Settlement Application form right now, but we can help you complete the Statement of Financial Condition which you need to file along with the Offer in Settlement.
+  
+  Do you want to work on the Statement of Financial Condition?
+  
+yesno: need_offer
