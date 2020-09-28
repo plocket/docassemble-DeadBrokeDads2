@@ -4,14 +4,13 @@ objects:
   - your_past_benefits: DADict.using(object_type=DAObject)
   - your_children_past_benefits: DADict.using(object_type=DAObject)
 ---
-
 code: |
-  if problems.any_true('shared-account'):
+  if problems['shared-account']:
     if guardian:
       guardian_order
     else:
       unprotected
- 
+
 
   benefits_dor_took_money.initializeAttribute("yours", DAList.using(there_are_any=False))
   benefits_dor_took_money.initializeAttribute("childrens", DAList.using(there_are_any=False))
@@ -69,7 +68,7 @@ code: |
   # ask for every value in true_benefits in a pseudo-loop.
   # every time this code executes, we add one item to your_past_benefits
   # from your_true_benefits
-  
+
   if len(your_past_benefits) < len(your_true_benefits):
     your_past_benefits.new_item_name = your_true_benefits[len(your_past_benefits)]
     
@@ -123,12 +122,12 @@ code: |
     if benefit.start_date <= cs_arrears_date <= benefit.end:
      arrears_during_benefits.append(item)
   arrears_during_benefits.gathered = True
-  
+
   if len(arrears_during_benefits) > 0:
     equit_adjust_a = True
 ---
 question: |
-  When was the first time you fell behind on child support payments?:
+  When was the first time you fell behind on child support payments?
 fields:
   - no label: cs_arrears_date
     datatype: date
@@ -144,23 +143,48 @@ yesno: guardian
 question: |
   Guardianship / Conservator
 subquestion: |
-    Do you have a copy of the Court order that shows you are a guardian or conservator? 
+  Do you have a copy of the Court order that shows you are a guardian or conservator?
 fields:
   - no label: guardian_order
     datatype: yesnoradio
   - Do you keep money for this other person in your bank account?: keep_ward_money
     datatype: yesnoradio
-  - Did DOR take money from the bank account you use to keep this other person's money?: DOR_take_ward_account
+  - Did DOR take money from the bank account you use to keep this other person's money?: dor_take_ward_account
     datatype: yesnoradio
     show if: keep_ward_money
-  - Did the money DOR take belong to this other person?: DOR_take_ward_money
+  - Did the money DOR take belong to this other person?: dor_take_ward_money
     datatype: yesnoradio
-    show if: DOR_take_ward_account
+    show if: dor_take_ward_account
+---
+code: |
+  if problems['shared-account']:
+    if guardian:
+      if keep_ward_money:
+        if not dor_take_ward_account:
+          dor_take_ward_money = False
+          levy_not_mine = False
+        else:   
+          levy_not_mine = dor_take_ward_money  
+      else:
+        dor_take_ward_money = False
+        levy_not_mine = False
+    else:
+      dor_take_ward_money = False
+      levy_not_mine = False
+  else:
+    dor_take_ward_money = False
+    levy_not_mine = False
+# depends on:
+#   - problems
+#   - guardian
+#   - keep_ward_money
+#   - dor_take_ward_account
+#   - dor_take_ward_money
 ---
 question: |
   A joint account is not protected
 subquestion: |
-  If you share a bank account with someone else and you cannot show that you are a guardian or conservator, DOR can take money from the account. DOR can take that money even if it belongs to someone else. 
+  If you share a bank account with someone else and you cannot show that you are a guardian or conservator, DOR can take money from the account. DOR can take that money even if it belongs to someone else.
 field: unprotected
 ---
 question: |
@@ -175,7 +199,7 @@ fields:
       - State Veterans Benefits
 ---
 question: |
- When did you get ${ i }?
+  When did you get ${ i }?
 fields:
   - When did your ${ i } start?: your_past_benefits[i].start_date
     datatype: date
@@ -231,21 +255,21 @@ validation code: |
   if dor_took_money_date > today():
     validation_error("This date cannot be in the future.")
 ---
-question: | 
+question: |
   DOR is taking money from your bank account
 subquestion: |
-  Is the bank account DOR took money from the **same account** your ${ your_past_benefits } benefits are deposited into?
-  
+  Did DOR take money from the **same account** your ${ your_past_benefits } benefits are deposited into?
+
   cs_arrears_date is ${ cs_arrears_date }
-  
+
   dor_took_money_date is ${ dor_took_money_date }
-  
+
   equit_adjust_a is ${equit_adjust_a}
-  
+
   % for item in your_past_benefits:
     ${ item } : ${ your_past_benefits[item].start_date } --  ${ your_past_benefits[item].end }<br>
   % endfor
-  
+
   And what is the value of benefits_w_ssi_kid? ${ benefits_w_ssi_kid }
 fields:
   - no label: account_same
@@ -262,12 +286,13 @@ fields:
 question: |
   DOR took money out of a different bank account
 subquestion: |
-  What if DOR took money out of my account and it's neither a guardian/conservator account, nor the account I put my benefits into? 
+  What if DOR took money out of my account and it's neither a guardian/conservator account, nor the account I put my benefits into?
 field: unexempt_account
 ---
 question: |
   DOR took non-benefit money out of my bank account
 subquestion: |
-  What if DOR took money out of the account my benefits go into, but it wasn't my benefit money? 
+  What if DOR took money out of the account my benefits go into, but it wasn't my benefit money?
 field: unexempt_money
 ---
+

@@ -9,7 +9,7 @@ metadata:
   authors: |
     - name: Caroline Robinson
       organization: Volunteer Lawyers Project
-  revision_date: 2020-02-17
+  revision_date: 2020-09-28
 ---
 sections:
   - Introduction
@@ -27,7 +27,11 @@ features:
 modules:
   - docassemble.income
   - .DBDIncome
+  - docassemble.ssa.ssa
 ---
+ #  features:
+ #    javascript: docassemble.ssa:ssa2.js
+ #  ---
 objects:
   - client: Individual
   - other_parent: Individual
@@ -60,7 +64,7 @@ include:
   - dbd-05-other-considerations.yml
   - dbd-06-form-decisions.yml
   - dbd-07-shared-form-info.yml
-  - dbdx.yml
+  #  - dbdx.yml
 ---
 mandatory: True
 code: |
@@ -70,14 +74,64 @@ code: |
     possibilities_complete
   reasons_for_review_complete
   other_considerations_complete
-  admin_review = True
-  equit_adjust = True
+  # admin_review = True
+  # equit_adjust = True
   
   
   # financial_statement_questions # Defines client, spouse, household, assets, incomes, vehicles, expenses,
-  # form_decisions_complete
+  form_decisions_complete
   shared_form_info_complete
   get_forms
+---
+attachment:
+  name: Help for Obligors
+  docx template file: help-for-obligors.docx
+  variable name: cover_page
+  filename: help-for-parents
+---
+attachment:
+  name: Administrative Review
+  docx template file: administrative_review.docx
+  variable name: administrative_review
+  filename: administrative_review
+---
+attachment:
+  name: Bank Levy
+  docx template file: bank-levy.docx
+  variable name: bank_levy
+  filename: bank_levy
+---
+attachment:
+  name: Equitable Adjustment
+  docx template file: equitable-adjustment.docx
+  variable name: equitable_adjustment
+  filename: equitable-adjustment
+---
+# Maybe need to switch to reconsider
+# if this triggers unneeded screens. Experiment
+reconsider:
+#   - cover_page
+#   - administrative_review
+#   - equitable_adjustment
+#   - bank_levy
+  - admin_review
+  - bank_levy
+  - equit_adjust
+
+code: |
+  file_bundle_temp = [cover_page]
+  
+  if admin_review:
+    file_bundle_temp.append(administrative_review)  
+  if bank_levy:
+    file_bundle_temp.append(bank_levy)
+  if equit_adjust:
+    file_bundle_temp.append(equitable_adjustment)
+
+  file_bundle_pdf = pdf_concatenate( file_bundle_temp, filename="help_for_obligor_parents.pdf")
+  # Each attachment variable has an attribute .pdf/.docx representing
+  # the pdf/docx versions of the file, respectively
+  file_bundle_zip = zip_file([item.docx for item in file_bundle_temp], filename="help_for_obligor_parents.zip") 
   
  
   
@@ -85,14 +139,23 @@ code: |
     
 
 ---
+id: forms are ready
+comment: |
+  get as zip file  
+  [:file-archive: Download as zip](${ file_bundle_zip.url_for()} )
 question: |
-  Here are your forms!
+  Your forms are ready!
 attachment:
-  name: Help for Child Support obligor parents
-  filename: help-for-parents
-  docx template file: help_for_obligors-test3-4.docx
-  valid formats:
-    - pdf
-    - docx
+  - name: Help for Child Support obligor parents
+    file name: help_for_obligor_parents
+    description: Your forms for DOR
+    content: |
+      ${ file_bundle_pdf }
+#  docx template file: admin_review_page2_2.docx
+#  docx template file: help_for_obligors-test4.docx
+    valid formats:
+      - pdf
+    tagged pdf: True
+always include editable files: False
 event: get_forms
 ---

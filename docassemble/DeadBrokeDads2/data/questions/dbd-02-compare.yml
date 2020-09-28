@@ -7,6 +7,7 @@ code: |
   if dor_cse_notice_court == 'A court that is not in Massachusetts':
     dor_cse_notice_court = other_cs_court
   penalty = arrears_state - arrears_federal
+  # {{showifdef('variable')}} or {if defined('variable') in jinja see quinten's dm in Slack 2020-02-24 for one more option
   do_not_owe_any = False
   if dor_cse_notice_arrears_wrong or dor_cse_notice_arrears_wrong == None:
     if cs_arrears_mc =='Yes':
@@ -52,15 +53,15 @@ question: |
 subquestion: |
   These notices can be confusing. 
   
-  1. The amount under ${other_parent.name.first}'s name,  is supposed to be **your regular child support payment**.
+  The amount under ${other_parent.name.first}'s name,  is supposed to be your regular child support payment.
 
-  2. In the middle is **how often** you are supposed to pay child support.
+  In the middle is how often you are supposed to pay child support.
 
-  3. The amount on the right is **the amount of back child support that DOR CSE says you owe**. This amount also includes any interest and penalties DOR CSE is charging you.
+  The amount on the right is the amount of back child support that DOR CSE says you owe. This amount also includes any interest and penalties DOR CSE is charging you.
   
+  What does DOR/CSE say these are?
   The notice should look something like this:
-  [FILE DBD_NoticeTop.png]  
-   What does DOR/CSE say these are?
+  [FILE DBD_NoticeTop.png]
 fields:
   - 1. What is the date?: notice_date_delinquency
     datatype: date 
@@ -186,7 +187,7 @@ fields:
       - sometimes I made partial payments, and sometimes I paid nothing: inconsistent
 ---
 question: |
-  When was the first time you fell behind on child support payments?:
+  When was the first time you fell behind on child support payments?
 fields:
   - no label: cs_arrears_date
     datatype: date
@@ -215,8 +216,14 @@ fields:
 code: |
   if not cs_arrears_catch_up:
     if cs_arrears_situ == 'nothing':
-      arrears_correct_value = currency((int(date_difference(starting=cs_arrears_date, ending=today()).weeks))*((court_ordered_cs * court_ordered_frequency)/52))
-      arrears_correct = "arrears_correct_value"
-    else:
-      arrears_correct = "I am not sure."
+    
+    # calculate the number of weeks between date client fell behind and today. Then multiply their weekly child support order by the number of weeks they are behind.
+      weekly_cs_amount = (court_ordered_cs * court_ordered_frequency)/52
+      arrears_correct_value = round((int(date_difference(starting=cs_arrears_date, ending=today()).weeks))*(weekly_cs_amount),2)
+
+  if arrears_correct_value > 0:
+    arrears_correct = '$' + str(arrears_correct_value)
+  else:
+    arrears_correct = 'I am not sure'
 ---
+  

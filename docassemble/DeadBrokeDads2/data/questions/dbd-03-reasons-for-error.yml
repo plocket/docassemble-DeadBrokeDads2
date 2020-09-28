@@ -114,10 +114,10 @@ fields:
 
 comment: |
   Did one of the children move
-	  in with you 
-	  in with ${ other_parent.name.first]' parent
-	  out on their own
-	  to live with someone who got a custody order
+    in with you 
+    in with ${ other_parent.name.first]' parent
+    out on their own
+    to live with someone who got a custody order
   Something else caused my child support problem
 section: Possible causes  
 ---

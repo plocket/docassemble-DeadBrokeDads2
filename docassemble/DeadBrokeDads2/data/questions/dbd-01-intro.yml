@@ -1,4 +1,7 @@
-mandatory: True
+---
+include:
+  - dbd-01a-hardships-to-sentences.yml
+---
 code: |
   if get_started:
     client.name.first
@@ -13,15 +16,19 @@ code: |
     # need_offer
   if problems.any_true('told-me-garnish-increase', 'told-boss-garnish-increase'): 
     if hardships.any_true():
-      twenty_five_percent = True
+      twenty_five_percent = True    
+      admin_review = True
+      finance_statement = True
+    else:
+      twenty_five_percent = False
+  else:
+    twenty_five_percent = False
   if problems.any_true('driver-license', 'car-reg'):
     comment_car
   if problems.any_true('business-license', 'professional-license', 'trade-license'):
     comment_license
-
+  open_text_paragraph_one_complete
   intro_complete = True
-
-
 ---
 section: Introduction
 question: | 
@@ -39,7 +46,8 @@ subquestion: |
     
     We will ask you questions to help you fill out the forms you need to get help with the money DOR says you them.
     
-  [FILE Notice_of_Arrears.png]  
+  [FILE Notice_of_Arrears.png]
+  
   Shall we get started?
 yesno: get_started
 under: |
@@ -86,10 +94,11 @@ fields:
       - DOR told **my employer** the amount of child support I need to pay is going up by 25%: told-boss-garnish-increase
       - DOR froze my account so I cannot use the money in my bank.: froze-account
       - DOR took money out of my bank account.: account
-      - DOR took money out of an account that is not my money.: shared-account			
-      - DOR took my driver's license: driver-license			
-      - DOR suspended my car registration: car-reg			
-      - DOR took my business license: business-license			
+      - DOR took more money of my account than I owe: too-much
+      - DOR took money out of an account that is not my money.: shared-account
+      - DOR took my driver's license: driver-license
+      - DOR suspended my car registration: car-reg
+      - DOR took my business license: business-license
       - DOR took my professional license: professional-license
       - DOR took my trade license: trade-license
       - I have another problem with DOR.: other
@@ -157,7 +166,7 @@ under: |
   For example, "I need my license to work so I can earn money to pay for my basic needs and child support."
 ---
 question: |
-  
+  Offer in Settlement
 subquestion: |
   You may be able to make a “settlement” with DOR/CSE for past-due child support.  DOR/CSE will **not** make a settlement with you about past-due child support you owe ${ other_parent.name.first }. 
   

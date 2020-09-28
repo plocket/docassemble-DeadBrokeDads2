@@ -76,25 +76,32 @@ code: |
   
   if assigned_is_zero:
     is_zero
+    equit_adjust = False
   else:
     is_not_zero
+    equit_adjust = True
     
   other_considerations_complete = True
 ---
 question: |
   Who do you owe?
 subquestion: |
-  As you know, we cannot help you with back child support you owe ${other_parent.name.first}, but in some cases we can ask DOR to forgive money you owe DOR. 
-
-  Look at the Child Support Enforcement System Financial Summary Report. 
+  As you know, 
   
-  [FILE account_summary_orig.png]
+  * we **cannot** help you with back child support you owe ${other_parent.name.first}, 
+  * but in some cases we **can** ask DOR to forgive money you owe DOR. 
+
+  Look at the Child Support Enforcement System Financial Summary Report.
+  
+  [[FILE DBD_AccountSummary.png]](https://da-dev.masslegalhelp.org/playgroundstatic/DeadBrokeDads/4/account_summary_orig.png)
 
   Under **Total Arrears** Look at the amount next to "Assigned."
   
-  Is there an amount more than $0.00 next to it?
+  Is the amount **more** than $0.00?
  
-noyes: assigned_is_zero
+  
+  
+yesno: assigned_is_zero
 ---
 question: | 
   You still owe ${other_parent.name.first}
