@@ -1,21 +1,25 @@
-id: notice of arrears info
-question: |
-  Take out the Notice of Arrears that you received from the DOR.
-subquestion: |
-  It looks like this: 
-  What is the total amount you should be paying according to the Notice 
-  of Arrears, and how often should you be paying it?
-fields: 
-  - Total amount: total_support
-    datatype: currency
-  - Every: total_support_freq
-    choices: 
-      - Week: Weekly
-      - Month: Monthly
+# code: |
+  # // we need to ask if parent is actually paying any child support now, how much and how often.  this is the amount that should go in here.
+  # total_support = dor_cse_notice_amount
+  # total_support_freq = dbd_period_string(dor_cse_notice_frequency)
+---
+# id: notice of arrears info
+# question: |
+  # Take out the Notice of Arrears that you received from the DOR.
+# subquestion: |
+  # It looks like this: 
+  # What is the total amount you should be paying according to the Notice of Arrears, and how often should you be paying it?
+# fields: 
+  # - Total amount: total_support
+    # datatype: currency
+  # - Every: total_support_freq
+    # choices: 
+    #  - Week: Weekly
+    #  - Month: Monthly
 ---
 code: |
   haschildren = True
-  children.target_number
+  children.target_number = child_number
   children.there_are_any = True
   children.ask_number = True
   complete_attribute = 'complete'
@@ -116,3 +120,5 @@ code: |
     for i in ind_household:
       if ind_household.item(i).month_contrib == True:
         ind_household_sum += ind_household.item(i).month_contrib_amt
+        
+  section_ii_complete = True

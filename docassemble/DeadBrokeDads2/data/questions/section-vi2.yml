@@ -1200,4 +1200,6 @@ code: |
   else: 
     transpo_exp_monthly = 0
   
-  total_expenses_gross = transpo_exp_monthly + other_exp_monthly + medexp_exp_monthly + medins_exp_monthly + autoins_exp_monthly + lifeins_exp_monthly + cellphone_exp_monthly + homephone_exp_monthly + heat_exp_monthly + electric_exp_monthly + water_exp_monthly + prop_ins_exp_monthly + rent_mort_gross_monthly + grocery_exp_monthly + clothing_exp_monthly 
+  total_expenses_gross = transpo_exp_monthly + other_exp_monthly + medexp_exp_monthly + medins_exp_monthly + autoins_exp_monthly + lifeins_exp_monthly + cellphone_exp_monthly + homephone_exp_monthly + heat_exp_monthly + electric_exp_monthly + water_exp_monthly + prop_ins_exp_monthly + rent_mort_gross_monthly + grocery_exp_monthly + clothing_exp_monthly
+
+  section_vi2_complete = True 

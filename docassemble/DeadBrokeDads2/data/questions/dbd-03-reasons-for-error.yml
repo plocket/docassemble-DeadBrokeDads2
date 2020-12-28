@@ -24,7 +24,7 @@ code: |
 
   possibilities_complete = True
 ---
-
+id: dbd 03 - possible causes
 question: |
   Events that may have caused your child support problem
 subquestion: |
@@ -121,6 +121,7 @@ comment: |
   Something else caused my child support problem
 section: Possible causes  
 ---
+id: dbd 03 - get notice
 question: |
    You missed a hearing?
 subquestion: |
@@ -135,16 +136,19 @@ fields:
       - No, I never got a notice: no
       - I am not sure if I ever got a notice: maybe
 ---
+id: dbd 03 - unneeded question section definition
 question: |
   Information about your child support order.
 section: Current child support order
 ---
+id: dbd 03 - beginning of order
 question: |
   When did the court **first** order you to pay child support to ${other_parent.name.first}? What is the date on that order?
 fields:
   - date on 1st child support order: cs_order_date
     datatype: date
 ---
+id: dbd 03 - court order direct pay?
 question: |
   Does your court order say you are to pay ${other_parent.name.first} directly?
 fields:
@@ -162,6 +166,7 @@ fields:
      - Pay DOR directly: directly
      - Pay DOR directly until wage assignment takes effect.: until
 ---
+id: dbd 03 -  court modified order
 question: |
   Has the court changed your child support order since ${cs_order_date}? 
 fields:
@@ -172,18 +177,20 @@ fields:
     show if:
       order_modified
 ---
+id: dbd 03 - who filed 
 question: |
  Information about your ${most_recent_order} child support order.
 subquestion: |
   Who filed the forms for your most recent child support order?
 fields:
   - no label: filer
-    datatype: checkboxes
+    input type: radio
     choices:
       - I filed: obligor
       - ${other_parent.name.first} filed: recipient
       - DOR/CSE filed: DOR/CSE
 ---
+id: dbd 03 -  date of modification
 question: |
   What is the date on the modified order?
 fields:
@@ -195,10 +202,12 @@ validation code: |
     if order_modified_date < cs_order_date:
       validation_error("This date must be after the court first ordered child support.")
 ---
+id: dbd 03 - DOR have a copy
 question: |
   Does DOR/CSE have a copy of the ${ most_recent_order} child support order?
 yesnomaybe: cse_copy
 ---
+id: dbd 03 - end date
 question: |
   Does your ${ most_recent_order} child support order have an end date?
 subquestion: |
@@ -219,12 +228,16 @@ fields:
     datatype: text
     show if: cs_order_end["cs_order_end_expl_tf"]
 ---
+id: dbd 03 - income gone down
 question: |
   Has your income gone down since ${most_recent_cs_date}?
-yesno: income_changed
+fields: 
+  - no label: income_changed
+    datatype: yesnoradio 
 ---
+id: dbd 03 - reason for less income
 question: |
-  Why has your income gone down?
+  Why did your income go down?
 fields:
   - I got fired: income_changed_fired
     datatype: yesnowide
@@ -237,10 +250,12 @@ fields:
   - I was sent to prison: income_changed_prison
     datatype: yesnowide
 ---
+id: dbd 03 - proof of child support
 question: |
   Do you have any proof?
 subquestion: |
-  Do you have any written or printed proof that shows you paid child support directly to ${other_parent.name.first}? Proof can be:
+  Do you have any written or printed proof that shows you paid child support directly to ${other_parent.name.first}?    
+  Proof can be:
   
   * cancelled checks, 
   * bank statements, 
@@ -257,9 +272,10 @@ fields:
 auto terms:
   - proof: Proof can be written, printed or saved on your phone or computer.
 ---
+id: dbd 03 - give DOR proof of child support
 Event: copy_DOR
 question: |
   Give DOR copies of the proof you have
 subquestion: |
-  Provide copies to DOR. DOR did not make a mistake, but DOR may credit you for the amounts you can prove you did pay and recalculate the amount you owe. Go to 
+  Provide copies to DOR. DOR did not make a mistake, but DOR may credit you for the amounts you can prove you did pay and recalculate the amount you owe.
 --- 
