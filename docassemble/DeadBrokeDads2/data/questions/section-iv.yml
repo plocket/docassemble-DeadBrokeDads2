@@ -11,6 +11,44 @@ code: |
     vehicles.new_item_name = len(vehicles)
   else: 
     vehicles.there_are_any=False
+  
+  has_safe_deposit_box
+  cash_on_hand
+
+  if hasprop == True:
+    realprop.there_are_any=True
+    realprop.new_item_name = len(realprop)
+  else: 
+    realprop.there_are_any=False
+    if client.address.type == 'Rent':
+      foreclosure_yesno = 'N/A'
+  
+  if hasbank == True:
+    bankact.there_are_any=True
+    bankact.new_item_name = len(bankact)
+  else: 
+    bankact.there_are_any=False
+  
+ if hasretirement == True:
+    retirement_acts.there_are_any=True
+    retirement_acts.new_item_name = len(retirement_acts)
+  else: 
+   retirement_acts.there_are_any=False
+
+  if hassecurities == True:
+    securities.there_are_any=True
+    securities.new_item_name = len(securities)
+  else: 
+    securities.there_are_any=False
+
+  what_i_have
+  anyone_else_hold_assets
+  party_to_lawsuit
+  any_insurance_claim
+  any_inheritance_likely
+  bankruptcy_case_pending
+
+  section_iv_complete = True
 ---
 id: vehicle info
 question: |
@@ -128,16 +166,6 @@ id: real property
 question: |
   Do you own or have any interest in any real property?
 yesno: hasprop
-
----
-code: |
-  if hasprop == True:
-    realprop.there_are_any=True
-    realprop.new_item_name = len(realprop)
-  else: 
-    realprop.there_are_any=False
-    if client.address.type == 'Rent':
-      foreclosure_yesno = 'N/A'
 ---
 id: real property info
 question: |
@@ -190,14 +218,7 @@ subquestion: |
   Please answer yes if you have any savings, checking, certificates of deposit, or 
   money market accounts. 
 yesno: hasbank
-
----
-code: |
-  if hasbank == True:
-    bankact.there_are_any=True
-    bankact.new_item_name = len(bankact)
-  else: 
-    bankact.there_are_any=False
+  
 ---
 id: bank account info
 question: |
@@ -231,13 +252,6 @@ subquestion: |
 yesno: hasretirement
 
 ---
-code: |
-  if hasretirement == True:
-    retirement_acts.there_are_any=True
-    retirement_acts.new_item_name = len(retirement_acts)
-  else: 
-   retirement_acts.there_are_any=False
----
 id: retirement account info
 question: |
   Please complete the following about the ${ ordinal(i) } retirement account:
@@ -266,14 +280,7 @@ id: securities
 question: |
   Do you have any securities such as mutual funds, stocks, or shares in companies?
 yesno: hassecurities
-
----
-code: |
-  if hassecurities == True:
-    securities.there_are_any=True
-    securities.new_item_name = len(securities)
-  else: 
-    securities.there_are_any=False
+ 
 ---
 id: security info
 question: |

@@ -26,14 +26,12 @@ modules:
 features:
   javascript: docassemble.ssa:ssa2.js
 ---
-
-# mandatory: true
-# question: |
-#   Here is your document.
-# attachments:
-#   - name: Statement of Financial Condition
-#     filename: statement_of_financial_condition
-#     docx template file: sofc8.docx
-#     valid formats:
-#       - pdf
-#       - docx
+code: |
+  section_i_complete
+  section_ii_complete
+  section_iii_complete
+  section_iv_complete
+  section_v_complete
+  section_vi2_complete
+  
+  sofc_complete = True

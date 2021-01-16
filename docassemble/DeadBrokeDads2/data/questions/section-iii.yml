@@ -176,3 +176,5 @@ code: |
     is_spouse_employed = False
     spouse_monthly_income = "N/A"
     spouse_monthly_income_source = "N/A"
+
+  section_iii_complete = True  

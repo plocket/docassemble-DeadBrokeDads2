@@ -1,21 +1,9 @@
-id: client name
-question: |
-  What is your name?
-fields: 
-  - First: client.name.first
-  - Middle: client.name.middle
-    required: False
-  - Last: client.name.last
----
-id: client address
-question: |
-  What is your current address?
-fields: 
-  - Street Address: client.address.address
-  - City: client.address.city
-  - State: client.address.state
-    code: states_list()
-  - Zip Code: client.address.zip
+code: |
+  client.address.type
+  client.address.month
+  client marital status
+  section_i_complete = True
+
 ---
 id: client address rent or own
 question: |
@@ -54,8 +42,6 @@ fields:
       is: 
         'Other'
 ---
-
----
 id: client address how long
 question: |
   How long have you lived at ${ client.address.address }?
@@ -66,30 +52,7 @@ fields:
     max: 11
   - Years: client.address.years
     datatype: integer
-    min: 0
----
-id: client contact info
-question: |
-  What is your email address, home phone number, and cell phone number?
-fields: 
-  - Email: client.email
-    datatype: email
-  - Home Phone: client.homephone
-    required: false
-  - Cell Phone: client.cellphone
-    required: false
----
-question: |
-  What is your Social Security Number and date of birth?
-fields: 
-  - SSN: client.ssn
-    datatype: ssn
-    validate: is_valid_ssn
-  - Drivers license number: client.dl
-    required: false
-  - Date of Birth: client.birthdate
-    datatype: date
-    
+    min: 0   
 ---
 id: client marital status
 question: |
