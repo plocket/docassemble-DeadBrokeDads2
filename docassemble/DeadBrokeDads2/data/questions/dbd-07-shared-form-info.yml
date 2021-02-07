@@ -91,6 +91,7 @@ fields:
   - Drivers license number: client.dl
     required: false
 ---
+id: signature date
 question: |
   Sign and date your forms
 subquestion: |
@@ -104,6 +105,7 @@ fields:
     default: ${today().format("yyyy-MM-dd")}
     required: False
 ---
+id: sign online
 question: |
   Do you want to sign your forms using your device?
 subquestion: |
