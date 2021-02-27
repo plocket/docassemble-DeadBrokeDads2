@@ -4,7 +4,7 @@ code: |
     dor_cse_notice_court = other_cs_court
   penalty = arrears_state - arrears_federal
   # {{showifdef('variable')}} or {if defined('variable') in jinja see quinten's dm in Slack 2020-02-24 for one more option
-  do_not_owe_any = False
+  
   if dor_cse_notice_arrears_wrong or dor_cse_notice_arrears_wrong == None:
     if cs_arrears_mc =='Yes':
       cs_arrears_situ
@@ -12,10 +12,12 @@ code: |
       cs_arrears_catch_up
       court_ordered_cs
     elif cs_arrears_mc == 'No':
-      if documentation:
-        do_not_owe_any = True
-      else:
+      if not documentation:
+  #     do_not_owe_any
+  #   else:
         more_info_needed
+    else:
+      printout_looks_right
   else:
     dor_cse_notice_arrears_true = True
     cs_arrears_date
@@ -149,12 +151,12 @@ id: dbd 02 - ever pay late?
 question: |
   Did you ever pay late?
 subquestion: |
-  Have you ever fallen behind on child support payments?
+  Did you ever fall behind on child support payments?
 field: cs_arrears_mc
 choices:
   - Yes
   - No
-  - I am not sure
+  - I am not sure  
 ---
 id: dbd 02 - have proof
 question: |
@@ -229,16 +231,26 @@ fields:
       period_list() 
 ---
 code: |
-  if not cs_arrears_catch_up:
-    if cs_arrears_situ == 'nothing':
-    
-    # calculate the number of weeks between date client fell behind and today. Then multiply their weekly child support order by the number of weeks they are behind.
-      weekly_cs_amount = (court_ordered_cs * court_ordered_frequency)/52
-      arrears_correct_value = round((int(date_difference(starting=cs_arrears_date, ending=today()).weeks))*(weekly_cs_amount),2)
+  if cs_arrears_mc == 'No':
+    do_not_owe_any = True
+    arrears_correct = '0.00'
+  elif cs_arrears_mc == 'I am not sure':        
+    do_not_owe_any = False
+  else:        
+    if not cs_arrears_catch_up:        
+      do_not_owe_any = False
+      if cs_arrears_situ == 'nothing':
+      
+      # calculate the number of weeks between date client fell behind and today. Then multiply their weekly child support order by the number of weeks they are behind.
+        weekly_cs_amount = (court_ordered_cs * court_ordered_frequency)/52
+        arrears_correct_value = round((int(date_difference(starting=cs_arrears_date, ending=today()).weeks))*(weekly_cs_amount),2)
 
-  if arrears_correct_value > 0:
-    arrears_correct = '$' + str(arrears_correct_value)
-  else:
-    arrears_correct = 'I am not sure'
+    else:
+      do_not_owe_any = True
+      arrears_correct_value = 0
+    if arrears_correct_value > 0:
+      arrears_correct = '$' + str(arrears_correct_value)
+    else:
+      arrears_correct = 'I am not sure'
 ---
   

@@ -1,5 +1,5 @@
 code: |
-  if do_not_owe_any or (dor_cse_notice_arrears_wrong and (arrears_correct > 0)) or benefits_w_ssi_kid or guardian or other_need:
+  if do_not_owe_any or (dor_cse_notice_arrears_wrong and (arrears_correct > 0)) or benefits_w_ssi_kid or appointed_guardian or appointed_conservator or rep_payee or other_need:
     admin_review = True
   # if twenty_five_percent:    
   #   admin_review = True
@@ -25,14 +25,20 @@ code: |
   else:
     levy_too_much = False
   if problems.any_true('froze-account', 'account', 'too-much', 'shared-account'):
-    levy_hardship = hardships.any_true()
     if levy_hardship:
-      levy_comments = hardshipsSentences
+      levy_comments
 
       
   
     
-  form_decisions_complete = True  
+  form_decisions_complete = True 
+---
+code: |
+  levy_hardship = hardships.any_true()
+---
+code: |
+    levy_comments = hardshipsSentences
+---
     
   
   
