@@ -23,11 +23,11 @@ Scenario: guardian, vet benefits, kid w ssi
     | administrative_review.info.formats[1] |  | pdf |
     | administrative_review.info.name |  | Administrative Review |
     | administrative_review.info.orig_variable_name |  | administrative_review |
-    | administrative_review.info.raw | False | false |
+    | administrative_review.info.raw | False | true |
     | administrative_review.pdf |  | administrative_review.pdf |
     | administrative_review.pdf.number |  | 9458 |
     | administrative_review.pdf.ok | True | true |
-    | appointed_conservator | False | false |
+    | appointed_conservator | False | true |
     | appointed_guardian | True | true |
     | arrears_correct |  | 0.00 |
     | arrears_during_benefits[0] |  | State Veterans Benefits |
@@ -47,7 +47,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | bank_levy.info.formats[1] |  | pdf |
     | bank_levy.info.name |  | Bank Levy |
     | bank_levy.info.orig_variable_name |  | bank_levy |
-    | bank_levy.info.raw | False | false |
+    | bank_levy.info.raw | False | true |
     | bank_levy.pdf |  | bank_levy.pdf |
     | bank_levy.pdf.number |  | 9454 |
     | bank_levy.pdf.ok | True | true |
@@ -57,10 +57,10 @@ Scenario: guardian, vet benefits, kid w ssi
     | your_past_benefits['State Veterans Benefits'].still_receiving | True | true |
     | benefits_dor_took_money |  | benefits_dor_took_money |
     | benefits_dor_took_money.childrens |  | benefits_dor_took_money.childrens |
-    | benefits_dor_took_money.childrens.there_are_any | False | false |
+    | benefits_dor_took_money.childrens.there_are_any | False | true |
     | benefits_dor_took_money.yours |  | benefits_dor_took_money.yours |
     | benefits_dor_took_money.yours.revisit | True | true |
-    | benefits_dor_took_money.yours.there_are_any | False | false |
+    | benefits_dor_took_money.yours.there_are_any | False | true |
     | benefits_used | True | true |
     | benefits_w_ssi_kid | True | true |
     | child_number |  | 2 |
@@ -92,7 +92,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | cover_page.info.formats[1] |  | pdf |
     | cover_page.info.name |  | Help for Obligors |
     | cover_page.info.orig_variable_name |  | cover_page |
-    | cover_page.info.raw | False | false |
+    | cover_page.info.raw | False | true |
     | cover_page.pdf |  | cover_page.pdf |
     | cover_page.pdf.number |  | 9456 |
     | cover_page.pdf.ok | True | true |
@@ -101,20 +101,20 @@ Scenario: guardian, vet benefits, kid w ssi
     | do_not_owe_any | True | true |
     | documentation | True | true |
     | dor_cse_notice_amount |  | 456 |
-    | dor_cse_notice_amount_wrong | False | false |
+    | dor_cse_notice_amount_wrong | False | true |
     | dor_cse_notice_arrears |  | 5467 |
     | dor_cse_notice_arrears_wrong | True | true |
     | dor_cse_notice_court |  | Norfolk Probate and Family Court |
-    | dor_cse_notice_court_wrong | False | false |
+    | dor_cse_notice_court_wrong | False | true |
     | dor_cse_notice_frequency |  | 52 |
-    | dor_cse_notice_frequency_wrong | False | false |
+    | dor_cse_notice_frequency_wrong | False | tru |
     | dor_other_parent |  | dor_other_parent |
     | dor_other_parent.address |  | dor_other_parent.address |
     | dor_other_parent.name |  | dor_other_parent.name |
     | dor_take_ward_account | True | true |
     | dor_take_ward_money | True | true |
     | dor_took_money_date |  | 12/12/2020 |
-    | equit_adjust | False | false |
+    | equit_adjust | False | true |
     | equit_adjust_a | True | true |
     | append |  | append |
     | append.number |  | 9459 |
@@ -127,7 +127,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | file_bundle_temp[0].info.formats[1] |  | pdf |
     | file_bundle_temp[0].info.name |  | Help for Obligors |
     | file_bundle_temp[0].info.orig_variable_name |  | cover_page |
-    | file_bundle_temp[0].info.raw | False | false |
+    | file_bundle_temp[0].info.raw | False | true |
     | file_bundle_temp[1] |  | administrative_review |
     | file_bundle_temp[1].info.attachment.name |  | Question_114 |
     | file_bundle_temp[1].info.attachment.number |  | 0 |
@@ -136,7 +136,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | file_bundle_temp[1].info.formats[1] |  | pdf |
     | file_bundle_temp[1].info.name |  | Administrative Review |
     | file_bundle_temp[1].info.orig_variable_name |  | administrative_review |
-    | file_bundle_temp[1].info.raw | False | false |
+    | file_bundle_temp[1].info.raw | False | true |
     | file_bundle_temp[2] |  | bank_levy |
     | file_bundle_temp[2].info.attachment.name |  | Question_115 |
     | file_bundle_temp[2].info.attachment.number |  | 0 |
@@ -145,7 +145,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | file_bundle_temp[2].info.formats[1] |  | pdf |
     | file_bundle_temp[2].info.name |  | Bank Levy |
     | file_bundle_temp[2].info.orig_variable_name |  | bank_levy |
-    | file_bundle_temp[2].info.raw | False | false |
+    | file_bundle_temp[2].info.raw | False | true |
     | append.number |  | 9460 |
     | form_decisions_complete | True | true |
     | guardian_order | True | true |
@@ -189,7 +189,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | levy_exempt | True | true |
     | levy_hardship | True | true |
     | levy_not_mine | True | true |
-    | levy_too_much | False | false |
+    | levy_too_much | False | true |
     | notice_date_delinquency |  | 11/02/2020 |
     | open_text_paragraph_one_complete | True | true |
     | other_parent |  | other_parent |
@@ -198,7 +198,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | other_parent.name.first |  | Cathy |
     | other_parent.name.last |  | CustodialParent |
     | other_parent.name.middle |  |  |
-    | other_parent_wrong | False | false |
+    | other_parent_wrong | False | true |
     | penalty |  | -884 |
     | period_as_string.1 |  | yearly |
     | period_as_string.4 |  | once every 3 months |
@@ -258,7 +258,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | problemsToSentences.too-much |  | DOR took more money out of my bank account than they should have. |
     | problemsToSentences.trade-license |  | DOR took my trade license |
     | reasons_for_review_complete | True | true |
-    | rep_payee | False | false |
+    | rep_payee | False | true |
     | requirements | True | true |
     | sentences |  | DOR took money out of my bank account.\nDOR took my driver's license.\nThis Notice of Delinquency is the first I knew I was behind in child support.\nDOR took money out of an account that is not my money.\n\nI cannot afford to leave an abusive relationship.\nI cannot pay for groceries.\nI cannot pay for medication I need.\nI cannot pick up my children. I cannot get to work so I cannot earn money for basic needs and child support |
     | shared_form_info_complete | True | true |
@@ -268,7 +268,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | signature.ok | True | true |
     | signature_date |  | 02/27/2021 |
     | still_receiving_benefits | True | true |
-    | twenty_five_percent | False | false |
+    | twenty_five_percent | False | true |
     | welcome | True | true |
     | your_benefit_list | EAEDC | false |
     | your_benefit_list | SSI | false |
@@ -286,7 +286,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | your_children_past_benefits |  | your_children_past_benefits |
     | your_children_past_benefits.revisit | True | true |
     | your_children_past_benefits.there_are_any | True | true |
-    | your_children_past_benefits.there_is_another | False | false |
+    | your_children_past_benefits.there_is_another | False | true |
     | _sorted_items[0] |  | SSI |
     | _sorted_items |  | _sorted_items |
     | _sorted_items.revisit | True | true |
@@ -298,6 +298,6 @@ Scenario: guardian, vet benefits, kid w ssi
     | your_past_benefits |  | your_past_benefits |
     | your_past_benefits.revisit | True | true |
     | your_past_benefits.there_are_any | True | true |
-    | your_past_benefits.there_is_another | False | false |
+    | your_past_benefits.there_is_another | False | true |
     | _sorted_items[0] |  | State Veterans Benefits |
     |  |  | /sign |
